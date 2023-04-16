@@ -1,0 +1,29 @@
+name: crud_using_drift_package_flutter
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.19.6 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  # Drift packages
+  drift: ^2.7.0
+  sqlite3_flutter_libs: ^0.5.13
+  path_provider: ^2.0.14
+  path: ^1.8.2
+  # For date formatting
+  intl: ^0.18.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  # To auto generate drift g.dart
+  drift_dev: ^2.7.0
+  build_runner: ^2.3.3
+
+flutter:
+  uses-material-design: true
