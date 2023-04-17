@@ -8,22 +8,20 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Drift CRUD Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          titleTextStyle: TextStyle(fontSize: 25),
+  Widget build(BuildContext context) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Drift CRUD Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          appBarTheme: const AppBarTheme(
+            centerTitle: true,
+            titleTextStyle: TextStyle(fontSize: 25),
+          ),
+          textTheme: const TextTheme(
+            labelLarge: TextStyle(fontSize: 25),
+          ),
         ),
-        textTheme: const TextTheme(
-          labelLarge: TextStyle(fontSize: 25),
-        ),
-      ),
-      initialRoute: '/',
-      onGenerateRoute: RouteGenerator.generateRoute,
-    );
-  }
+        initialRoute: '/',
+        onGenerateRoute: RouteGenerator.generateRoute,
+      );
 }
