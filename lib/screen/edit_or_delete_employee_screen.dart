@@ -4,9 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:drift/drift.dart' as drift;
 
 import '/data/local/db/app_db.dart';
-import '/widget/custom_date_picker_form_field.dart';
+import '/widgets/custom_date_picker_form_field.dart';
 
-import '/widget/custom_text_form_field.dart';
+import '/widgets/custom_text_form_field.dart';
 
 class EditOrDeleteEmployeeScreen extends StatefulWidget {
   const EditOrDeleteEmployeeScreen({

@@ -18,55 +18,281 @@ samples, guidance on mobile development, and a full API reference.
 ## 1. Research: CRUD Operations With Drift Package Flutter
 
 - Keywords:
-    - _[Add here a list of important keywords about the topic]_
-    - ...
-- Video
-  Title: _[Add here a short, interesting and descriptive title for the video that contains high ranking keywords]_
+    - flutter drift
+    - flutter drift package
+    - drift package flutter
+    - drift database flutter
+    - drift flutter example
+    - flutter drift github
+    - drift flutter example github
+    - moor flutter
+    - flutter drift tutorial
+    - drift moor flutter
+    - flutter drift vs sqflite
+    - flutter drift tutorial
+    - flutter drift update
+    - flutter vs floor flutter
+    - flutter drift relation
+    - flutter drift tutorial
+    - flutter drift provider
+    - drift flutter
+    - moor flutter example
+    - moor flutter pub dev
+    - moor generator flutter
+    - moor database
+    - flutter drift foreign key
+- Video Title: Drift (Moor/sqlite) Database Package Flutter | Drift Package Flutter with CRUD
+  Operations Example Github
 
 ## 2. Research: Competitors
 
 **Flutter Videos/Articles**
 
-- _[Add here the high ranking video links that have many views, or are ranked high on YouTube, Google ...]_
-- _[e.g. 380K: https://www.youtube.com/watch?v=Nl54MJDR2p8]_
+- 2.8K: https://youtu.be/61kOwZeoa9I
+- 1.3K: https://youtu.be/MlVL1lHW9LI
+- Playlist: https://youtu.be/8ESbEFC0z5Y?list=PLztm2TugcV9Tn6J_H5mtxYIBN40uMAZgO
+- Playlist: https://youtu.be/_xVWj0LXx24?list=PLnr97bWJJm5T5DsnQ6GurAaoTnJAnflmm
+- 68K: https://youtu.be/zpWsedYMczM
+- https://pub.dev/packages/drift
+- https://morioh.com/p/38818a701008
+- https://drift.simonbinder.eu/docs/getting-started/
+- https://fluttertalk.com/flutter-crud-tutorial-using-drift-package/
+- https://medium.com/@mustafatahirhussein/drift-moor-database-for-flutter-an-overview-f17ff8548d85
+- https://morioh.com/p/f6424b29c6f8
 
 **Android/Swift/React Videos**
 
-- _[Add here the high ranking video links that have many views, or are ranked high on YouTube ...]_
-- _[e.g. 380K: https://www.youtube.com/watch?v=Nl54MJDR2p8]_
+- https://www.geeksforgeeks.org/android-sqlite-database-in-kotlin/
+- https://medium.com/@imbilalhassan/saving-data-in-sqlite-db-in-ios-using-swift-4-76b743d3ce0e
+- https://www.tutorialspoint.com/android/android_sqlite_database.htm
+- https://www.javatpoint.com/android-sqlite-tutorial
+- https://objectbox.io/flutter-databases-sqflite-hive-objectbox-and-moor/
+- https://drift.simonbinder.eu/faq/
+- https://dontpaniclabs.com/blog/post/2022/07/26/sqlite-and-swift/
+- https://blog.canopas.com/ios-persist-data-using-sqlite-swift-library-with-swiftui-example-c5baefc04334
+- https://medium.com/@imbilalhassan/saving-data-in-sqlite-db-in-ios-using-swift-4-76b743d3ce0e
+- https://www.javatpoint.com/android-sqlite-tutorial
+- https://www.npmjs.com/package/react-native-sqlite-storage
+- https://blog.logrocket.com/using-sqlite-with-react-native/
+- https://medium.com/infinitbility/react-native-sqlite-storage-422503634dd2
+- https://www.educba.com/react-native-sqlite/
+- https://dev-yakuza.posstree.com/en/react-native/react-native-sqlite-storage/
+- https://reactnativecode.com/creating-sqlite-database-table-in-react-native/
+- 59K: https://youtu.be/9LYn-OBO5qE
+- Playlist: https://youtu.be/hJPk50p7xwA?list=PLSrm9z4zp4mGK0g_0_jxYGgg3os9tqRUQ
+- 49K: https://youtu.be/CzGNaiSoh7E
+- 24K: https://youtu.be/VnabHcf0e3w
+- 14K: https://youtu.be/s32FuDBGBf8
+- 17K: https://youtu.be/Dxz6ABHedXg
+- 2.5K: https://youtu.be/falbK8dF9OE
+- 2.6K: https://youtu.be/bmLkSyLmCvM
+- 4.8K: https://youtu.be/2v0vY-u4ItA
+- 5.6K: https://youtu.be/4zcFp8RluyA
+- 9.8K: https://youtu.be/i93WabMZRYo
+- 2.3K: https://youtu.be/EkEOi8T7yVw?list=PLAJklozSk6qce-wk4pK_exZhYT3IqdDWT
+- 11K: https://youtu.be/1kSLd9oQX7c
+- 59K: https://youtu.be/wAyizHBFQEs
+- 31K: https://youtu.be/GkuPPJ7AOSQ
+- 13K: https://youtu.be/VCN5Th19hZM
+- 2.3K: https://youtu.be/EkEOi8T7yVw
+- 1.8K: https://youtu.be/GmHKgHE5hPc
 
 **Great Features**
 
-- _[Add here the great features & things that are showcased well from the videos above, if it is about UI you could also attach screenshots]_
-- _..._
+- Drift is a reactive library to store relational data in Dart and Flutter applications.
+- Drift is a reactive persistence library built on top of sqlite.
+- You can find more features at [pub.dev/packages/drift](https://pub.dev/packages/drift).
 
 **Problems from Videos**
 
-- _[Add here problems that users faced in the video comments, or also solved problems from the video itself]_
-- _..._
+- Question: Target of URI does not exist for the import `abb_db.g.dart`. Dart analyzer is not
+  parsing the generated file.
+
+Answer: Follow
+this [link](https://stackoverflow.com/questions/44358331/dart-analyzer-is-not-parsing-the-dynamic-generated-files)
+.
 
 **Problems from Flutter Stackoverflow**
 
+- https://stackoverflow.com/questions/72370038/build-runner-not-working-as-expected-in-flutter-drift
 - https://stackoverflow.com/questions/44358331/dart-analyzer-is-not-parsing-the-dynamic-generated-files
+- https://stackoverflow.com/questions/71637707/how-do-i-resolve-a-sqlite-error-1-in-flutter
+- https://stackoverflow.com/questions/74962568/error-whe-use-where-statement-on-flutter-drift-query
+- https://stackoverflow.com/questions/73436419/drift-moor-flutter-stateerror-bad-state-no-element-when-selecting-single-row
+- https://stackoverflow.com/questions/73927618/flutter-drift-library-inconsistency-found-while-naming-table-and-doing-migration
+- https://stackoverflow.com/questions/74741837/problem-with-flutter-drift-dao-when-calling-method-to-fetch-data-problem-is-the
+- https://stackoverflow.com/questions/71597562/flutter-gives-error-by-using-drift-after-moor
+- https://stackoverflow.com/questions/73051837/flutter-drift-parameters-prohibited-in-check-constraints
+- https://stackoverflow.com/questions/60132243/app-database-generated-file-having-errors-in-moor-flutter
+- https://stackoverflow.com/questions/72428719/drift-stream-not-updating-on-insert-update-and-delete
 
 ## 3. Video Structure
 
 **Main Points / Purpose Of Lesson**
 
-1. _[Why is it useful for the viewer to learn more about what we teach in this video lesson?]_
-2. _[What are the main points of this video lesson]_
-    - _[Add here multiple main points ...]_
-    - _[...]_
-3. _[Out of 1. & 2. create 2-3 sentences that could be later used for recording the introduction of this video lesson]_
+1. In this video, you will learn how to use CRUD operations using drift package which is based on
+   top of sqlite.
+2. Main points:
+    - Add employee
+    - Edit employee
+    - Delete employee
+3. After all these implementations, provider can also be used with them.
 
 **The Structured Main Content**
 
-1. _[Add here the main topics the video project is covering in chronological order. For each topic add the main points how this lesson can be taught step by step to beginners who never did anything related to what this lesson is about]_
-2. ![](CRUD%20With%20Drift%20Output.gif)
-3. _[e.g. for this video project: https://www.youtube.com/watch?v=MSv38jO4EJk]_
-    - _[1. Setup Android & iOS]_
-        - _[Add for each topic more detailed steps ...]_
-        - _[...]_
-    - _[2. Pick Image From Gallery]_
-    - _[3. Pick Image From Camera]_
-    - _[4. Persist Images To Local Storage]_
+1. Run `dart pub get drift` to add drift package in your project's pubspec.yaml file.
+2. For this project:
+    - You must follow [drift](https://drift.simonbinder.eu/docs/getting-started)
+      official documentation for project setup.
+    - According to above documentation:
+        - Add sqlite3_flutter_libs, path_provider and path in dependencies.
+        - Add drift_dev and build_runner in dev_dependencies.
+
+3. Here is the output of this complete project:
+
+![](CRUD%20With%20Drift%20Output.gif)
+
+4. In `main.dart` file, there are theming properties and MaterialApp's initialRoute property is
+   calling `/` which is HomePage of this app.
+5. widgets folder contains `CustomDatePickerFormField` and `CustomTextFormField` widgets.
+6. route folder contains `route_generator.dart` file contains all routes with route settings and
+   error route:
+
+```dart
+class RouteGenerator {
+  static Route<dynamic> generateRoute(RouteSettings settings) {
+    final args = settings.arguments;
+
+    switch (settings.name) {
+      case '/':
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case '/add_employee':
+        return MaterialPageRoute(builder: (_) => const AddEmployeeScreen());
+      case '/edit_employee':
+        if (args is int) {
+          return MaterialPageRoute(
+              builder: (_) => EditOrDeleteEmployeeScreen(id: args));
+        }
+        return errorRoute();
+      default:
+        return errorRoute();
+    }
+  }
+
+  static Route<dynamic> errorRoute() {
+    return MaterialPageRoute(
+      builder: (_) =>
+          Scaffold(
+            appBar: AppBar(
+              title: const Text('No Route'),
+            ),
+            body: const Center(
+              child: Text(
+                'Sorry no route was found!',
+                style: TextStyle(color: Colors.red, fontSize: 18.0),
+              ),
+            ),
+          ),
+    );
+  }
+}
+
+```
+
+7. data folder contains local folder inside it. data folder may contain remote folder also. For
+   drift sqlite database, we are using local database.
+
+   Inside local, there is db folder and entity folder.
+
+    - entity folder contains `employee_entity.dart` file. This file is importing drift package. It
+      used to create table. So, every class will extend Table from drift package.
+    - Table of drift uses IntColumn for integers, TextColumn for text and DateTimeColumn for data of
+      birth.
+    - id of user is assigned automatically using autoIncrement() function of drift which will also
+      make this column the primary key of the table. For this reason, you can't use an autoIncrement
+      column and also set a custom Table.primaryKey on the same table.
+
+```dart
+class Employee extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get userName => text().named('user_name')();
+
+  TextColumn get firstName => text().named('first_name')();
+
+  TextColumn get lastName => text().named('last_name')();
+
+  DateTimeColumn get dateOfBirth => dateTime().named('date_of_birth')();
+}
+
+```
+
+- db folder contains `app_db.dart` and `app_db.g.dart`. `app_db.g.dart` file is created after
+  writing code of `app_db.dart`.
+
+  Code of `app_db.dart` is following:
+
+```dart
+import 'dart:io';
+
+import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
+import '/data/local/entity/employee_entity.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
+
+part 'app_db.g.dart';
+
+LazyDatabase openConnection() =>
+    LazyDatabase(() async {
+      final dbFolder = await getApplicationDocumentsDirectory();
+      final file = File(
+        path.join(dbFolder.path, 'employee.sqlite'),
+      );
+      return NativeDatabase(file);
+    });
+
+@DriftDatabase(tables: [Employee])
+class AppDb extends $AppDb {
+  AppDb() : super(openConnection());
+
+  @override
+  int get schemaVersion => 1;
+
+  Future<List<EmployeeData>> getEmployees() async =>
+      await (select(employee).get());
+
+  Future<EmployeeData> getEmployee(int id) async =>
+      await (select(employee)
+        ..where((tbl) => tbl.id.equals(id))).getSingle();
+
+  Future<bool> updateEmployee(EmployeeCompanion entity) async =>
+      await update(employee).replace(entity);
+
+  Future<int> insertEmployee(EmployeeCompanion entity) async =>
+      await into(employee).insert(entity);
+
+  Future<int> deleteEmployee(int id) async =>
+      await (delete(employee)
+        ..where((tbl) => tbl.id.equals(id))).go();
+}
+```
+
+There is openConnection() method which is returning LazyDatabase.
+
+- getApplicationDocumentsDirectory of path_provider package is the directory where the application
+  may place data that is user-generated.
+- File of dart:io creates a new File object named `employee.sqlite` in the path of
+  getApplicationDocumentsDirectory.
+- Then this LazyDatabase return the NativeDatabase with file `employee.sqlite`.
+- `@DriftDatabase(tables: [Employee])` tells drift the names of all tables here.
+  <br/>
+  `AppDb` class is extending $AppDb which is from auto generated `app_db.g.dart`. After writing it,
+  it will show error, but after completing the code of file, I will run a command and file will be
+  auto generated.
+  <br/>
+- schemaVersion is overriding from `app_db.g.dart` file. It specifies the schema version of
+  database.
+- openConnection method is called in the constructor of this `AppDb` class. `
+  AppDb() : super(openConnection());`
+- 

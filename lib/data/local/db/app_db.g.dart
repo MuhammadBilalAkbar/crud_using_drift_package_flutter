@@ -294,8 +294,8 @@ class EmployeeCompanion extends UpdateCompanion<EmployeeData> {
   }
 }
 
-abstract class _$AppDb extends GeneratedDatabase {
-  _$AppDb(QueryExecutor e) : super(e);
+abstract class $AppDb extends GeneratedDatabase {
+  $AppDb(QueryExecutor e) : super(e);
   late final $EmployeeTable employee = $EmployeeTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
