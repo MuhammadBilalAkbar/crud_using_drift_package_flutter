@@ -48,6 +48,14 @@ class _EditOrDeleteEmployeeScreenState
     super.dispose();
   }
 
+  Future<void> getEmployee() async {
+    employeeData = await db.getEmployee(widget.id);
+    userNameController.text = employeeData.userName;
+    firstNameController.text = employeeData.lastName;
+    lastNameController.text = employeeData.firstName;
+    dateOfBirthController.text = employeeData.dateOfBirth.toString();
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -197,13 +205,5 @@ class _EditOrDeleteEmployeeScreenState
           );
       Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
     }
-  }
-
-  Future<void> getEmployee() async {
-    employeeData = await db.getEmployee(widget.id);
-    userNameController.text = employeeData.userName;
-    firstNameController.text = employeeData.lastName;
-    lastNameController.text = employeeData.firstName;
-    dateOfBirthController.text = employeeData.dateOfBirth.toString();
   }
 }

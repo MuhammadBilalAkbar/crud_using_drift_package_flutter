@@ -16,7 +16,8 @@ class RouteGenerator {
       case '/edit_employee':
         if (args is int) {
           return MaterialPageRoute(
-              builder: (_) => EditOrDeleteEmployeeScreen(id: args));
+            builder: (_) => EditOrDeleteEmployeeScreen(id: args),
+          );
         }
         return errorRoute();
       default:

@@ -124,7 +124,6 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
         dateOfBirth: drift.Value(dateOfBirth!),
       );
 
-      // db.insertEmployee(entity);
       db.insertEmployee(entity).then(
             (value) => ScaffoldMessenger.of(context).showMaterialBanner(
               MaterialBanner(

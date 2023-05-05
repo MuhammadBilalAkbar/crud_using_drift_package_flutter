@@ -46,7 +46,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: RefreshIndicator(
           onRefresh: refreshUsersFromApi,
-          // onRefresh: db.getEmployees,
           child: FutureBuilder<List<EmployeeData>>(
             future: db.getEmployees(),
             builder: (context, snapshot) {
@@ -74,15 +73,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Card(
                         shape: const RoundedRectangleBorder(
-                            side: BorderSide(
-                              color: Colors.green,
-                              style: BorderStyle.solid,
-                              width: 1.2,
-                            ),
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(16.0),
-                              bottomRight: Radius.circular(16.0),
-                            )),
+                          side: BorderSide(
+                            color: Colors.green,
+                            style: BorderStyle.solid,
+                            width: 1.2,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(16.0),
+                            bottomRight: Radius.circular(16.0),
+                          ),
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Column(

@@ -286,13 +286,346 @@ There is openConnection() method which is returning LazyDatabase.
   getApplicationDocumentsDirectory.
 - Then this LazyDatabase return the NativeDatabase with file `employee.sqlite`.
 - `@DriftDatabase(tables: [Employee])` tells drift the names of all tables here.
+
   <br/>
-  `AppDb` class is extending $AppDb which is from auto generated `app_db.g.dart`. After writing it,
-  it will show error, but after completing the code of file, I will run a command and file will be
-  auto generated.
+  `AppDb` class is extending $AppDb which is from auto generated `app_db.g.dart`. After writing it, it will 
+  show error, but after completing the code up to constructor of this file, I will run a command and file
+  will be auto generated.
   <br/>
+
 - schemaVersion is overriding from `app_db.g.dart` file. It specifies the schema version of
   database.
 - openConnection method is called in the constructor of this `AppDb` class. `
   AppDb() : super(openConnection());`
-- 
+- Then run `flutter pub run build_runner build --delete-conflicting-outputs` in terminal to
+  generate `app_db.g.dart` file. Be patient, it will take some time.
+- If `app_db.g.dart` file is generated and your project does not recognize it, re-run dart analysis
+  server which is in the bottom near terminal tab.
+  ![](dartanalysis.png)
+
+    <br/>
+    After generating `app_db.g.dart` file, define following methods in `app_db.dart` file
+    <br/>
+
+- `getEmployees()` gives list of employee data.
+- `getEmployee()` gives data of single employee.
+- `updateEmployee()` updates data of single employee.
+- `insertEmployee()` inserts a new employee.
+- `deleteEmployee()` deletes an employee.
+
+
+8. screen folder contains all screens of this project:
+   `home_screen.dart` file, initialize following:
+
+```dart 
+late AppDb db;
+List<EmployeeData> employeesForUi = [];
+List<EmployeeData> employeeFromApi = [];
+
+@override
+void initState() {
+  super.initState();
+  db = AppDb();
+  SystemChannels.textInput.invokeMethod('TextInput.hide');
+}
+
+Future<List<EmployeeData>> refreshUsersFromApi() async {
+  final employeesFromApi = await db.getEmployees();
+  setState(() {
+    employeesForUi = employeesFromApi;
+  });
+  return employeesForUi;
+}
+
+@override
+void dispose() {
+  db.close();
+  super.dispose();
+}
+```
+
+Code of UI is following:
+
+```dart 
+Scaffold(
+        appBar: AppBar(
+          title: const Text('CRUD Operations With Drift Flutter'),
+        ),
+        body: RefreshIndicator(
+          onRefresh: refreshUsersFromApi,
+          child: FutureBuilder<List<EmployeeData>>(
+            future: db.getEmployees(),
+            builder: (context, snapshot) {
+              final employees = snapshot.data;
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text(snapshot.error.toString()),
+                );
+              }
+              if (employees != null) {
+                return ListView.builder(
+                  itemCount: employees.length,
+                  itemBuilder: (context, index) {
+                    final employee = employees[index];
+                    return GestureDetector(
+                      onTap: () => Navigator.pushNamed(
+                        context,
+                        '/edit_employee',
+                        arguments: employee.id,
+                      ),
+                      child: Card(
+                        shape: const RoundedRectangleBorder(
+                            side: BorderSide(
+                              color: Colors.green,
+                              style: BorderStyle.solid,
+                              width: 1.2,
+                            ),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(16.0),
+                              bottomRight: Radius.circular(16.0),
+                            )),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(employee.id.toString()),
+                              Text(employee.userName),
+                              Text(employee.firstName),
+                              Text(employee.lastName),
+                              Text(employee.dateOfBirth.toString()),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
+              return const Text('No data found');
+            },
+          ),
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () => Navigator.pushNamed(context, '/add_employee'),
+          icon: const Icon(Icons.add),
+          label: const Text('Add Employee'),
+        ),
+      );
+}
+```
+
+It uses RefreshIndicator to refresh employee list.
+
+It uses FutureBuilder to get employee list.
+
+It uses ListView builder to show employee list.
+
+9. In `add_employee_screen.dart`, declare the following:
+   ```dart 
+    final formKey = GlobalKey<FormState>();
+    final userNameController = TextEditingController();
+    final firstNameController = TextEditingController();
+    final lastNameController = TextEditingController();
+    final dateOfBirthController = TextEditingController();
+    DateTime? dateOfBirth;
+    late AppDb db;
+    ```
+   use initState and dispose to initialize db and dispose db and text controllers.
+
+    ```dart
+      @override
+    void initState() {
+      super.initState();
+      db = AppDb();
+    }
+    
+    @override
+    void dispose() {
+      db.close();
+      userNameController.dispose();
+      firstNameController.dispose();
+      lastNameController.dispose();
+      dateOfBirthController.dispose();
+      super.dispose();
+    }
+    ```
+   UI code of `add_employee_screen.dart` is following:
+
+```dart 
+Scaffold(
+        appBar: AppBar(
+          title: const Text('Add Employee'),
+          actions: [
+            IconButton(
+              onPressed: addEmployee,
+              icon: const Icon(Icons.save),
+            ),
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Form(
+            key: formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  CustomTextFormField(
+                    textLabel: 'User name',
+                    controller: userNameController,
+                  ),
+                  const SizedBox(height: 8),
+                  CustomTextFormField(
+                    textLabel: 'First name',
+                    controller: firstNameController,
+                  ),
+                  const SizedBox(height: 8),
+                  CustomTextFormField(
+                    textLabel: 'Last name',
+                    controller: lastNameController,
+                  ),
+                  const SizedBox(height: 8),
+                  CustomDatePickerFormField(
+                    dateOfBirthController: dateOfBirthController,
+                    txtLabel: 'Date of Birth',
+                    callback: () => pickDateOfBirth(context),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+```
+
+pickDateOfBirth() method:
+
+```dart 
+ Future<void> pickDateOfBirth(BuildContext context) async {
+  final initialDate = DateTime.now();
+  final newDate = await showDatePicker(
+    context: context,
+    initialDate: dateOfBirth ?? initialDate,
+    firstDate: DateTime(initialDate.year - 100),
+    lastDate: DateTime(initialDate.year + 1),
+    builder: (context, child) =>
+        Theme(
+          data: ThemeData().copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: Colors.pink,
+              onPrimary: Colors.white,
+              onSurface: Colors.black,
+              background: Colors.white,
+            ),
+          ),
+          child: child ?? const Text(''),
+        ),
+  );
+  if (newDate == null) {
+    return;
+  }
+  setState(() {
+    dateOfBirth = newDate;
+    final dob = DateFormat('dd/MM/yyyy').format(newDate);
+    dateOfBirthController.text = dob;
+  });
+}
+```
+
+addEmployee() method:
+
+If the from is valid then `EmployeeCompanion` is called from `app_db.g.dart` to insert new employee.
+
+entity is made using `EmployeeCompanion`. `db.insertEmployee(entity)` is called to insert employee
+entity. After insertEmployee, .then() can be used what to do when a new employee is inserted.
+
+```dart
+ void addEmployee() {
+  final isValid = formKey.currentState?.validate();
+  if (isValid != null && isValid) {
+    final entity = EmployeeCompanion(
+      userName: drift.Value(userNameController.text),
+      firstName: drift.Value(firstNameController.text),
+      lastName: drift.Value(lastNameController.text),
+      dateOfBirth: drift.Value(dateOfBirth!),
+    );
+
+    db.insertEmployee(entity).then(
+          (value) =>
+          ScaffoldMessenger.of(context).showMaterialBanner(
+            MaterialBanner(
+              backgroundColor: Colors.pink,
+              content: Text(
+                'New employee inserted: $value',
+                style: const TextStyle(color: Colors.white),
+              ),
+              actions: [
+                Builder(
+                  builder: (context) =>
+                      TextButton(
+                        onPressed: () =>
+                            ScaffoldMessenger.of(context)
+                                .hideCurrentMaterialBanner(),
+                        child: const Text(
+                          'Close',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                ),
+              ],
+            ),
+          ),
+    );
+    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+  }
+}
+```
+
+10. In `edit_or_delete_employee_screen.dart`, id is required in order to edit or delete an employee.
+
+Initialize using initState and dispose the following:
+
+```dart
+
+final formKey = GlobalKey<FormState>();
+final userNameController = TextEditingController();
+final firstNameController = TextEditingController();
+final lastNameController = TextEditingController();
+final dateOfBirthController = TextEditingController();
+DateTime? dateOfBirth;
+late AppDb db;
+late EmployeeData employeeData;
+
+@override
+void initState() {
+  super.initState();
+  db = AppDb();
+  getEmployee();
+}
+
+@override
+void dispose() {
+  db.close();
+  userNameController.dispose();
+  firstNameController.dispose();
+  lastNameController.dispose();
+  dateOfBirthController.dispose();
+  super.dispose();
+}
+
+
+Future<void> getEmployee() async {
+  employeeData = await db.getEmployee(widget.id);
+  userNameController.text = employeeData.userName;
+  firstNameController.text = employeeData.lastName;
+  lastNameController.text = employeeData.firstName;
+  dateOfBirthController.text = employeeData.dateOfBirth.toString();
+}
+```
+
+
