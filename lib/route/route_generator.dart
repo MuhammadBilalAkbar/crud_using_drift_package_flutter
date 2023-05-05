@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '/screen/edit_or_delete_employee_screen.dart';
-import '/screen/add_employee_screen.dart';
 import '/screen/home_screen.dart';
+import '/screen/add_employee_screen.dart';
+import '/screen/edit_or_delete_employee_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {

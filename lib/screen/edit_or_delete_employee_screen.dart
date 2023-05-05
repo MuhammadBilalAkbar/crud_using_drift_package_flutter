@@ -139,7 +139,6 @@ class _EditOrDeleteEmployeeScreenState
   }
 
   void deleteEmployee() {
-    // db.deleteEmployee(widget.id);
     db.deleteEmployee(widget.id).then(
       (value) {
         return ScaffoldMessenger.of(context).showMaterialBanner(
@@ -179,7 +178,6 @@ class _EditOrDeleteEmployeeScreenState
         dateOfBirth: drift.Value(dateOfBirth!),
       );
 
-      // db.updateEmployee(entity);
       db.updateEmployee(entity).then(
             (value) => ScaffoldMessenger.of(context).showMaterialBanner(
               MaterialBanner(
