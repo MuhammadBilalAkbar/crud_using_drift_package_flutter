@@ -628,4 +628,103 @@ Future<void> getEmployee() async {
 }
 ```
 
+All previous data of employee of specific id is loaded through `getEmployee()` method in initState()
+.
 
+UI code of this screen is following:
+
+```dart 
+Scaffold(
+        appBar: AppBar(
+          title: const Text('Edit Employee'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                editEmployee();
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/', (route) => false);
+              },
+              icon: const Icon(Icons.save),
+            ),
+            IconButton(
+              onPressed: deleteEmployee,
+              icon: const Icon(Icons.delete),
+            ),
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Form(
+            key: formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  CustomTextFormField(
+                    textLabel: 'User name',
+                    controller: userNameController,
+                  ),
+                  const SizedBox(height: 8),
+                  CustomTextFormField(
+                    textLabel: 'First name',
+                    controller: firstNameController,
+                  ),
+                  const SizedBox(height: 8),
+                  CustomTextFormField(
+                    textLabel: 'Last name',
+                    controller: lastNameController,
+                  ),
+                  const SizedBox(height: 8),
+                  CustomDatePickerFormField(
+                    dateOfBirthController: dateOfBirthController,
+                    txtLabel: 'Date of Birth',
+                    callback: () => pickDateOfBirth(context),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+```
+
+pickDateOfBirth() is same as in add_employee_screen.dart file.
+
+deleteEmployee() method is following:
+
+It uses `db.deleteEmployee(widget.id)`. .then() can also be used after deleteEmployee() is
+successful.
+
+```dart
+  void deleteEmployee() {
+  db.deleteEmployee(widget.id).then(
+        (value) {
+      return ScaffoldMessenger.of(context).showMaterialBanner(
+        MaterialBanner(
+          backgroundColor: Colors.pink,
+          content: Text(
+            'Employee deleted: ${widget.id}',
+            style: const TextStyle(color: Colors.white),
+          ),
+          actions: [
+            Builder(
+              builder: (context) =>
+                  TextButton(
+                    onPressed: () =>
+                        ScaffoldMessenger.of(context).hideCurrentMaterialBanner(),
+                    child: const Text(
+                      'Close',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+  Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+}
+```
+
+editEmployee() method is similar to the addEmployee() method is add_employee_screen.dart except the
+one parameter id which is `id: drift.Value(widget.id),` in EmployeeCompanion entity.

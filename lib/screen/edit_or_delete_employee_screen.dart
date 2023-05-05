@@ -139,7 +139,7 @@ class _EditOrDeleteEmployeeScreenState
   }
 
   void deleteEmployee() {
-    // db.deleteEmployee(entity);
+    // db.deleteEmployee(widget.id);
     db.deleteEmployee(widget.id).then(
       (value) {
         return ScaffoldMessenger.of(context).showMaterialBanner(
