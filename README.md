@@ -153,7 +153,7 @@ this [link](https://stackoverflow.com/questions/44358331/dart-analyzer-is-not-pa
 ![](CRUD%20With%20Drift%20Output.gif)
 
 4. In `main.dart` file, there are theming properties and MaterialApp's initialRoute property is
-   calling `/` which is HomePage of this app.
+   calling `AppConstants.homeRoute` which is HomePage of this app.
 5. widgets folder contains `CustomDatePickerFormField` and `CustomTextFormField` widgets.
 6. route folder contains `route_generator.dart` file contains all routes with route settings and
    error route:

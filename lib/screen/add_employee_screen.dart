@@ -1,3 +1,4 @@
+import 'package:crud_using_drift_package_flutter/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
@@ -75,7 +76,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                   const SizedBox(height: 8),
                   CustomDatePickerFormField(
                     dateOfBirthController: dateOfBirthController,
-                    txtLabel: 'Date of Birth',
+                    label: 'Date of Birth',
                     callback: () => pickDateOfBirth(context),
                   ),
                 ],
@@ -147,7 +148,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
               ),
             ),
           );
-      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+      Navigator.pushNamedAndRemoveUntil(context, AppConstants.homeRoute, (route) => false);
     }
   }
 }

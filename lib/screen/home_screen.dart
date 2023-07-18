@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:crud_using_drift_package_flutter/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -51,9 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (context, snapshot) {
               final employees = snapshot.data;
               if (snapshot.connectionState != ConnectionState.done) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+                return const Center(child: CircularProgressIndicator());
               }
               if (snapshot.hasError) {
                 return Center(
@@ -68,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     return GestureDetector(
                       onTap: () => Navigator.pushNamed(
                         context,
-                        '/edit_employee',
+                        AppConstants.editOrDeleteEmployeeRoute,
                         arguments: employee.id,
                       ),
                       child: Card(
@@ -106,7 +105,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () => Navigator.pushNamed(context, '/add_employee'),
+          onPressed: () =>
+              Navigator.pushNamed(context, AppConstants.addEmployeeRoute),
           icon: const Icon(Icons.add),
           label: const Text('Add Employee'),
         ),

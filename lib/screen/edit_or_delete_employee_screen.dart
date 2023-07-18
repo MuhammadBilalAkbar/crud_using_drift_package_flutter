@@ -1,3 +1,4 @@
+import 'package:crud_using_drift_package_flutter/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
@@ -65,7 +66,7 @@ class _EditOrDeleteEmployeeScreenState
               onPressed: () {
                 editEmployee();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, '/', (route) => false);
+                    context, AppConstants.homeRoute, (route) => false);
               },
               icon: const Icon(Icons.save),
             ),
@@ -99,7 +100,7 @@ class _EditOrDeleteEmployeeScreenState
                   const SizedBox(height: 8),
                   CustomDatePickerFormField(
                     dateOfBirthController: dateOfBirthController,
-                    txtLabel: 'Date of Birth',
+                    label: 'Date of Birth',
                     callback: () => pickDateOfBirth(context),
                   ),
                 ],
@@ -164,7 +165,7 @@ class _EditOrDeleteEmployeeScreenState
         );
       },
     );
-    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+    Navigator.pushNamedAndRemoveUntil(context, AppConstants.homeRoute, (route) => false);
   }
 
   void editEmployee() {
@@ -201,7 +202,7 @@ class _EditOrDeleteEmployeeScreenState
               ),
             ),
           );
-      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+      Navigator.pushNamedAndRemoveUntil(context, AppConstants.homeRoute, (route) => false);
     }
   }
 }

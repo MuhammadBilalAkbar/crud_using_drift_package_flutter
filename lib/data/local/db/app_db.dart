@@ -27,7 +27,7 @@ class AppDb extends $AppDb {
       await (select(employee).get());
 
   Future<EmployeeData> getEmployee(int id) async =>
-      await (select(employee)..where((tbl) => tbl.id.equals(id))).getSingle();
+      await (select(employee)..where((employee) => employee.id.equals(id))).getSingle();
 
   Future<bool> updateEmployee(EmployeeCompanion entity) async =>
       await update(employee).replace(entity);
@@ -36,5 +36,5 @@ class AppDb extends $AppDb {
       await into(employee).insert(entity);
 
   Future<int> deleteEmployee(int id) async =>
-      await (delete(employee)..where((tbl) => tbl.id.equals(id))).go();
+      await (delete(employee)..where((employee) => employee.id.equals(id))).go();
 }

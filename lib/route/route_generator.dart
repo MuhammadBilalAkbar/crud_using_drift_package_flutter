@@ -1,3 +1,4 @@
+import 'package:crud_using_drift_package_flutter/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 import '/screen/home_screen.dart';
@@ -9,11 +10,11 @@ class RouteGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
-      case '/':
+      case AppConstants.homeRoute:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
-      case '/add_employee':
+      case AppConstants.addEmployeeRoute:
         return MaterialPageRoute(builder: (_) => const AddEmployeeScreen());
-      case '/edit_employee':
+      case AppConstants.editOrDeleteEmployeeRoute:
         if (args is int) {
           return MaterialPageRoute(
             builder: (_) => EditOrDeleteEmployeeScreen(id: args),

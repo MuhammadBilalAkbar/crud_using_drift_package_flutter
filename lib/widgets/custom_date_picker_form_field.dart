@@ -4,12 +4,12 @@ class CustomDatePickerFormField extends StatelessWidget {
   const CustomDatePickerFormField({
     Key? key,
     required this.dateOfBirthController,
-    required this.txtLabel,
+    required this.label,
     required this.callback,
   }) : super(key: key);
 
   final TextEditingController dateOfBirthController;
-  final String txtLabel;
+  final String label;
   final VoidCallback callback;
 
   @override
@@ -18,11 +18,11 @@ class CustomDatePickerFormField extends StatelessWidget {
         keyboardType: TextInputType.name,
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
-          label: Text(txtLabel),
+          label: Text(label),
         ),
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return '$txtLabel can not be empty';
+            return '$label can not be empty';
           }
           return null;
         },
