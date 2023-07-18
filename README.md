@@ -150,7 +150,7 @@ this [link](https://stackoverflow.com/questions/44358331/dart-analyzer-is-not-pa
 
 3. Here is the output of this complete project:
 
-![](CRUD%20With%20Drift%20Output.gif)
+   ![](CRUD%20With%20Drift%20Output.gif)
 
 4. In `main.dart` file, there are theming properties and MaterialApp's initialRoute property is
    calling `AppConstants.homeRoute` which is HomePage of this app.
@@ -164,14 +164,15 @@ class RouteGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
-      case '/':
+      case AppConstants.homeRoute:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
-      case '/add_employee':
+      case AppConstants.addEmployeeRoute:
         return MaterialPageRoute(builder: (_) => const AddEmployeeScreen());
-      case '/edit_employee':
+      case AppConstants.editOrDeleteEmployeeRoute:
         if (args is int) {
           return MaterialPageRoute(
-              builder: (_) => EditOrDeleteEmployeeScreen(id: args));
+            builder: (_) => EditOrDeleteEmployeeScreen(id: args),
+          );
         }
         return errorRoute();
       default:
@@ -181,23 +182,21 @@ class RouteGenerator {
 
   static Route<dynamic> errorRoute() {
     return MaterialPageRoute(
-      builder: (_) =>
-          Scaffold(
-            appBar: AppBar(
-              title: const Text('No Route'),
-            ),
-            body: const Center(
-              child: Text(
-                'Sorry no route was found!',
-                style: TextStyle(color: Colors.red, fontSize: 18.0),
-              ),
-            ),
+      builder: (_) => Scaffold(
+        appBar: AppBar(
+          title: const Text('No Route'),
+        ),
+        body: const Center(
+          child: Text(
+            'Sorry no route was found!',
+            style: TextStyle(color: Colors.red, fontSize: 18.0),
           ),
+        ),
+      ),
     );
   }
 }
-
-```
+```  
 
 7. data folder contains local folder inside it. data folder may contain remote folder also. For
    drift sqlite database, we are using local database.
@@ -243,8 +242,7 @@ import 'package:path/path.dart' as path;
 
 part 'app_db.g.dart';
 
-LazyDatabase openConnection() =>
-    LazyDatabase(() async {
+LazyDatabase openConnection() => LazyDatabase(() async {
       final dbFolder = await getApplicationDocumentsDirectory();
       final file = File(
         path.join(dbFolder.path, 'employee.sqlite'),
@@ -263,8 +261,7 @@ class AppDb extends $AppDb {
       await (select(employee).get());
 
   Future<EmployeeData> getEmployee(int id) async =>
-      await (select(employee)
-        ..where((tbl) => tbl.id.equals(id))).getSingle();
+      await (select(employee)..where((employee) => employee.id.equals(id))).getSingle();
 
   Future<bool> updateEmployee(EmployeeCompanion entity) async =>
       await update(employee).replace(entity);
@@ -273,8 +270,7 @@ class AppDb extends $AppDb {
       await into(employee).insert(entity);
 
   Future<int> deleteEmployee(int id) async =>
-      await (delete(employee)
-        ..where((tbl) => tbl.id.equals(id))).go();
+      await (delete(employee)..where((employee) => employee.id.equals(id))).go();
 }
 ```
 
@@ -358,9 +354,7 @@ Scaffold(
             builder: (context, snapshot) {
               final employees = snapshot.data;
               if (snapshot.connectionState != ConnectionState.done) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+                return const Center(child: CircularProgressIndicator());
               }
               if (snapshot.hasError) {
                 return Center(
@@ -375,20 +369,21 @@ Scaffold(
                     return GestureDetector(
                       onTap: () => Navigator.pushNamed(
                         context,
-                        '/edit_employee',
+                        AppConstants.editOrDeleteEmployeeRoute,
                         arguments: employee.id,
                       ),
                       child: Card(
                         shape: const RoundedRectangleBorder(
-                            side: BorderSide(
-                              color: Colors.green,
-                              style: BorderStyle.solid,
-                              width: 1.2,
-                            ),
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(16.0),
-                              bottomRight: Radius.circular(16.0),
-                            )),
+                          side: BorderSide(
+                            color: Colors.green,
+                            style: BorderStyle.solid,
+                            width: 1.2,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(16.0),
+                            bottomRight: Radius.circular(16.0),
+                          ),
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Column(
@@ -412,12 +407,12 @@ Scaffold(
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () => Navigator.pushNamed(context, '/add_employee'),
+          onPressed: () =>
+              Navigator.pushNamed(context, AppConstants.addEmployeeRoute),
           icon: const Icon(Icons.add),
           label: const Text('Add Employee'),
         ),
       );
-}
 ```
 
 It uses RefreshIndicator to refresh employee list.
@@ -492,7 +487,7 @@ Scaffold(
                   const SizedBox(height: 8),
                   CustomDatePickerFormField(
                     dateOfBirthController: dateOfBirthController,
-                    txtLabel: 'Date of Birth',
+                    label: 'Date of Birth',
                     callback: () => pickDateOfBirth(context),
                   ),
                 ],
@@ -505,36 +500,35 @@ Scaffold(
 
 pickDateOfBirth() method:
 
-```dart 
- Future<void> pickDateOfBirth(BuildContext context) async {
-  final initialDate = DateTime.now();
-  final newDate = await showDatePicker(
-    context: context,
-    initialDate: dateOfBirth ?? initialDate,
-    firstDate: DateTime(initialDate.year - 100),
-    lastDate: DateTime(initialDate.year + 1),
-    builder: (context, child) =>
-        Theme(
-          data: ThemeData().copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: Colors.pink,
-              onPrimary: Colors.white,
-              onSurface: Colors.black,
-              background: Colors.white,
-            ),
+```dart
+  Future<void> pickDateOfBirth(BuildContext context) async {
+    final initialDate = DateTime.now();
+    final newDate = await showDatePicker(
+      context: context,
+      initialDate: dateOfBirth ?? initialDate,
+      firstDate: DateTime(initialDate.year - 100),
+      lastDate: DateTime(initialDate.year + 1),
+      builder: (context, child) => Theme(
+        data: ThemeData().copyWith(
+          colorScheme: const ColorScheme.light(
+            primary: Colors.pink,
+            onPrimary: Colors.white,
+            onSurface: Colors.black,
+            background: Colors.white,
           ),
-          child: child ?? const Text(''),
         ),
-  );
-  if (newDate == null) {
-    return;
+        child: child ?? const Text(''),
+      ),
+    );
+    if (newDate == null) {
+      return;
+    }
+    setState(() {
+      dateOfBirth = newDate;
+      final dob = DateFormat('dd/MM/yyyy').format(newDate);
+      dateOfBirthController.text = dob;
+    });
   }
-  setState(() {
-    dateOfBirth = newDate;
-    final dob = DateFormat('dd/MM/yyyy').format(newDate);
-    dateOfBirthController.text = dob;
-  });
-}
 ```
 
 addEmployee() method:
@@ -545,45 +539,42 @@ entity is made using `EmployeeCompanion`. `db.insertEmployee(entity)` is called 
 entity. After insertEmployee, .then() can be used what to do when a new employee is inserted.
 
 ```dart
- void addEmployee() {
-  final isValid = formKey.currentState?.validate();
-  if (isValid != null && isValid) {
-    final entity = EmployeeCompanion(
-      userName: drift.Value(userNameController.text),
-      firstName: drift.Value(firstNameController.text),
-      lastName: drift.Value(lastNameController.text),
-      dateOfBirth: drift.Value(dateOfBirth!),
-    );
+  void addEmployee() {
+    final isValid = formKey.currentState?.validate();
+    if (isValid != null && isValid) {
+      final entity = EmployeeCompanion(
+        userName: drift.Value(userNameController.text),
+        firstName: drift.Value(firstNameController.text),
+        lastName: drift.Value(lastNameController.text),
+        dateOfBirth: drift.Value(dateOfBirth!),
+      );
 
-    db.insertEmployee(entity).then(
-          (value) =>
-          ScaffoldMessenger.of(context).showMaterialBanner(
-            MaterialBanner(
-              backgroundColor: Colors.pink,
-              content: Text(
-                'New employee inserted: $value',
-                style: const TextStyle(color: Colors.white),
-              ),
-              actions: [
-                Builder(
-                  builder: (context) =>
-                      TextButton(
-                        onPressed: () =>
-                            ScaffoldMessenger.of(context)
-                                .hideCurrentMaterialBanner(),
-                        child: const Text(
-                          'Close',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
+      db.insertEmployee(entity).then(
+            (value) => ScaffoldMessenger.of(context).showMaterialBanner(
+              MaterialBanner(
+                backgroundColor: Colors.pink,
+                content: Text(
+                  'New employee inserted: $value',
+                  style: const TextStyle(color: Colors.white),
                 ),
-              ],
+                actions: [
+                  Builder(
+                    builder: (context) => TextButton(
+                      onPressed: () => ScaffoldMessenger.of(context)
+                          .hideCurrentMaterialBanner(),
+                      child: const Text(
+                        'Close',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-    );
-    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+          );
+      Navigator.pushNamedAndRemoveUntil(context, AppConstants.homeRoute, (route) => false);
+    }
   }
-}
 ```
 
 10. In `edit_or_delete_employee_screen.dart`, id is required in order to edit or delete an employee.
@@ -642,7 +633,7 @@ Scaffold(
               onPressed: () {
                 editEmployee();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, '/', (route) => false);
+                    context, AppConstants.homeRoute, (route) => false);
               },
               icon: const Icon(Icons.save),
             ),
@@ -676,7 +667,7 @@ Scaffold(
                   const SizedBox(height: 8),
                   CustomDatePickerFormField(
                     dateOfBirthController: dateOfBirthController,
-                    txtLabel: 'Date of Birth',
+                    label: 'Date of Birth',
                     callback: () => pickDateOfBirth(context),
                   ),
                 ],
@@ -696,34 +687,33 @@ successful.
 
 ```dart
   void deleteEmployee() {
-  db.deleteEmployee(widget.id).then(
-        (value) {
-      return ScaffoldMessenger.of(context).showMaterialBanner(
-        MaterialBanner(
-          backgroundColor: Colors.pink,
-          content: Text(
-            'Employee deleted: ${widget.id}',
-            style: const TextStyle(color: Colors.white),
-          ),
-          actions: [
-            Builder(
-              builder: (context) =>
-                  TextButton(
-                    onPressed: () =>
-                        ScaffoldMessenger.of(context).hideCurrentMaterialBanner(),
-                    child: const Text(
-                      'Close',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
+    db.deleteEmployee(widget.id).then(
+      (value) {
+        return ScaffoldMessenger.of(context).showMaterialBanner(
+          MaterialBanner(
+            backgroundColor: Colors.pink,
+            content: Text(
+              'Employee deleted: ${widget.id}',
+              style: const TextStyle(color: Colors.white),
             ),
-          ],
-        ),
-      );
-    },
-  );
-  Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-}
+            actions: [
+              Builder(
+                builder: (context) => TextButton(
+                  onPressed: () =>
+                      ScaffoldMessenger.of(context).hideCurrentMaterialBanner(),
+                  child: const Text(
+                    'Close',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+    Navigator.pushNamedAndRemoveUntil(context, AppConstants.homeRoute, (route) => false);
+  }
 ```
 
 editEmployee() method is similar to the addEmployee() method is add_employee_screen.dart except the
