@@ -67,9 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     return GestureDetector(
                       onTap: () => Navigator.pushNamed(
                         context,
-                        AppConstants.editOrDeleteEmployeeRoute,
-                        // arguments: {employee.id, true},
-                        // arguments: employee.id, true,
+                        AppConstants.employeeRoute,
                         arguments: ScreenArguments(
                           id: employee.id,
                           editMode: true,
@@ -112,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () => Navigator.pushNamed(
             context,
-            AppConstants.editOrDeleteEmployeeRoute,
+            AppConstants.employeeRoute,
             arguments: ScreenArguments(editMode: false),
           ),
           icon: const Icon(Icons.add),

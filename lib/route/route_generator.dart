@@ -10,10 +10,9 @@ class RouteGenerator {
       case AppConstants.homeRoute:
         debugPrint('settings.name for homeRoute: ${settings.name}');
         return MaterialPageRoute(builder: (_) => const HomeScreen());
-      case AppConstants.editOrDeleteEmployeeRoute:
+      case AppConstants.employeeRoute:
         debugPrint(
             'settings.name for editOrDeleteEmployeeRoute: ${settings.name}');
-        // if (settings.name == AppConstants.editOrDeleteEmployeeRoute) {
         final args = settings.arguments as ScreenArguments?;
         if (args?.id != null) {
           return MaterialPageRoute(
@@ -29,12 +28,9 @@ class RouteGenerator {
             ),
           );
         }
-      // }
-      // break;
       default:
         return errorRoute();
     }
-    // return errorRoute();
   }
 
   static Route<dynamic> errorRoute() {
