@@ -68,7 +68,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () => Navigator.pushNamed(
                         context,
                         AppConstants.editOrDeleteEmployeeRoute,
-                        arguments: employee.id,
+                        // arguments: {employee.id, true},
+                        // arguments: employee.id, true,
+                        arguments: ScreenArguments(
+                          id: employee.id,
+                          editMode: true,
+                        ),
                       ),
                       child: Card(
                         shape: const RoundedRectangleBorder(
@@ -105,10 +110,23 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () =>
-              Navigator.pushNamed(context, AppConstants.addEmployeeRoute),
+          onPressed: () => Navigator.pushNamed(
+            context,
+            AppConstants.editOrDeleteEmployeeRoute,
+            arguments: ScreenArguments(editMode: false),
+          ),
           icon: const Icon(Icons.add),
           label: const Text('Add Employee'),
         ),
       );
+}
+
+class ScreenArguments {
+  final int? id;
+  final bool editMode;
+
+  ScreenArguments({
+    this.id,
+    required this.editMode,
+  });
 }

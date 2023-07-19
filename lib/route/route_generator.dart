@@ -2,28 +2,39 @@ import 'package:crud_using_drift_package_flutter/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 import '/screen/home_screen.dart';
-import '/screen/add_employee_screen.dart';
-import '/screen/edit_or_delete_employee_screen.dart';
+import '/screen/employee_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    final args = settings.arguments;
-
     switch (settings.name) {
       case AppConstants.homeRoute:
+        debugPrint('settings.name for homeRoute: ${settings.name}');
         return MaterialPageRoute(builder: (_) => const HomeScreen());
-      case AppConstants.addEmployeeRoute:
-        return MaterialPageRoute(builder: (_) => const AddEmployeeScreen());
       case AppConstants.editOrDeleteEmployeeRoute:
-        if (args is int) {
+        debugPrint(
+            'settings.name for editOrDeleteEmployeeRoute: ${settings.name}');
+        // if (settings.name == AppConstants.editOrDeleteEmployeeRoute) {
+        final args = settings.arguments as ScreenArguments?;
+        if (args?.id != null) {
           return MaterialPageRoute(
-            builder: (_) => EditOrDeleteEmployeeScreen(id: args),
+            builder: (_) => EmployeeScreen(
+              id: args!.id,
+              editMode: args.editMode,
+            ),
+          );
+        } else {
+          return MaterialPageRoute(
+            builder: (_) => EmployeeScreen(
+              editMode: args!.editMode,
+            ),
           );
         }
-        return errorRoute();
+      // }
+      // break;
       default:
         return errorRoute();
     }
+    // return errorRoute();
   }
 
   static Route<dynamic> errorRoute() {

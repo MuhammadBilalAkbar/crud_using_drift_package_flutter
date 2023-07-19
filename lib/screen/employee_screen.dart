@@ -1,3 +1,4 @@
+/// Add, Edit, or Delete Employee Screen
 import 'package:crud_using_drift_package_flutter/constants/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -9,14 +10,21 @@ import '/widgets/custom_date_picker_form_field.dart';
 
 import '/widgets/custom_text_form_field.dart';
 
-class AddEmployeeScreen extends StatefulWidget {
-  const AddEmployeeScreen({Key? key}) : super(key: key);
+class EmployeeScreen extends StatefulWidget {
+  const EmployeeScreen({
+    Key? key,
+    this.id,
+    required this.editMode,
+  }) : super(key: key);
+
+  final int? id;
+  final bool editMode;
 
   @override
-  State<AddEmployeeScreen> createState() => _AddEmployeeScreenState();
+  State<EmployeeScreen> createState() => _EmployeeScreenState();
 }
 
-class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
+class _EmployeeScreenState extends State<EmployeeScreen> {
   final formKey = GlobalKey<FormState>();
   final userNameController = TextEditingController();
   final firstNameController = TextEditingController();
@@ -24,11 +32,13 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
   final dateOfBirthController = TextEditingController();
   DateTime? dateOfBirth;
   late AppDb db;
+  late EmployeeData employeeData;
 
   @override
   void initState() {
     super.initState();
     db = AppDb();
+    if (widget.editMode == true) getEmployee();
   }
 
   @override
@@ -41,14 +51,35 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
     super.dispose();
   }
 
+  Future<void> getEmployee() async {
+    employeeData = await db.getEmployee(widget.id!);
+    userNameController.text = employeeData.userName;
+    firstNameController.text = employeeData.lastName;
+    lastNameController.text = employeeData.firstName;
+    dateOfBirthController.text = employeeData.dateOfBirth.toString();
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('Add Employee'),
+          title: widget.editMode
+              ? const Text('Edit Employee')
+              : const Text('Add Employee'),
           actions: [
             IconButton(
-              onPressed: addEmployee,
+              onPressed: () {
+                widget.editMode ? editEmployee() : addEmployee();
+                Navigator.pushNamedAndRemoveUntil(
+                    context, AppConstants.homeRoute, (route) => false);
+              },
               icon: const Icon(Icons.save),
+            ),
+            Visibility(
+              visible: widget.editMode,
+              child: IconButton(
+                onPressed: deleteEmployee,
+                icon: const Icon(Icons.delete),
+              ),
             ),
           ],
         ),
@@ -110,8 +141,10 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
     }
     setState(() {
       dateOfBirth = newDate;
+      // dateOfBirth = DateTime.parse(newDate.toString().substring(0, 9));
       final dob = DateFormat('dd/MM/yyyy').format(newDate);
       dateOfBirthController.text = dob;
+      // dateOfBirthController.text = dob.substring(0,9);
     });
   }
 
@@ -148,7 +181,80 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
               ),
             ),
           );
-      Navigator.pushNamedAndRemoveUntil(context, AppConstants.homeRoute, (route) => false);
+      Navigator.pushNamedAndRemoveUntil(
+          context, AppConstants.homeRoute, (route) => false);
     }
+  }
+
+  void editEmployee() {
+    final isValid = formKey.currentState?.validate();
+    if (isValid != null && isValid) {
+      final entity = EmployeeCompanion(
+        id: drift.Value(widget.id!),
+        userName: drift.Value(userNameController.text),
+        firstName: drift.Value(firstNameController.text),
+        lastName: drift.Value(lastNameController.text),
+        dateOfBirth: drift.Value(dateOfBirth!),
+        // dateOfBirth: widget.editMode
+        //     ? drift.Value(DateTime.parse(dateOfBirthController.text))
+        //     : drift.Value(dateOfBirth!),
+      );
+
+      db.updateEmployee(entity).then(
+            (value) => ScaffoldMessenger.of(context).showMaterialBanner(
+              MaterialBanner(
+                backgroundColor: Colors.pink,
+                content: Text(
+                  'Employee updated: ${widget.id}',
+                  style: const TextStyle(color: Colors.white),
+                ),
+                actions: [
+                  Builder(
+                    builder: (context) => TextButton(
+                      onPressed: () => ScaffoldMessenger.of(context)
+                          .hideCurrentMaterialBanner(),
+                      child: const Text(
+                        'Close',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+      Navigator.pushNamedAndRemoveUntil(
+          context, AppConstants.homeRoute, (route) => false);
+    }
+  }
+
+  void deleteEmployee() {
+    db.deleteEmployee(widget.id!).then(
+      (value) {
+        return ScaffoldMessenger.of(context).showMaterialBanner(
+          MaterialBanner(
+            backgroundColor: Colors.pink,
+            content: Text(
+              'Employee deleted: ${widget.id}',
+              style: const TextStyle(color: Colors.white),
+            ),
+            actions: [
+              Builder(
+                builder: (context) => TextButton(
+                  onPressed: () =>
+                      ScaffoldMessenger.of(context).hideCurrentMaterialBanner(),
+                  child: const Text(
+                    'Close',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+    Navigator.pushNamedAndRemoveUntil(
+        context, AppConstants.homeRoute, (route) => false);
   }
 }
