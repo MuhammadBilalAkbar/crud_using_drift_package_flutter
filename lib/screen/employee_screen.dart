@@ -2,7 +2,6 @@
 import 'package:crud_using_drift_package_flutter/constants/constants.dart';
 import 'package:flutter/material.dart';
 
-import 'package:intl/intl.dart';
 import 'package:drift/drift.dart' as drift;
 
 import '/data/local/db/app_db.dart';
@@ -140,11 +139,8 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
       return;
     }
     setState(() {
-      dateOfBirth = newDate;
-      // dateOfBirth = DateTime.parse(newDate.toString().substring(0, 9));
-      final dob = DateFormat('dd/MM/yyyy').format(newDate);
-      dateOfBirthController.text = dob;
-      // dateOfBirthController.text = dob.substring(0,9);
+        dateOfBirth = newDate;
+        dateOfBirthController.text = newDate.toString();
     });
   }
 
@@ -194,10 +190,9 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
         userName: drift.Value(userNameController.text),
         firstName: drift.Value(firstNameController.text),
         lastName: drift.Value(lastNameController.text),
-        dateOfBirth: drift.Value(dateOfBirth!),
-        // dateOfBirth: widget.editMode
-        //     ? drift.Value(DateTime.parse(dateOfBirthController.text))
-        //     : drift.Value(dateOfBirth!),
+        dateOfBirth: widget.editMode
+            ? drift.Value(DateTime.parse(dateOfBirthController.text))
+            : drift.Value(dateOfBirth!),
       );
 
       db.updateEmployee(entity).then(

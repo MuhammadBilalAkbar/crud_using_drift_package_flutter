@@ -94,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Text(employee.userName),
                               Text(employee.firstName),
                               Text(employee.lastName),
-                              Text(employee.dateOfBirth.toString()),
+                              Text(employee.dateOfBirth.toString().substring(0,10)),
                             ],
                           ),
                         ),
